@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import authRouter from "./routes/auth.routes.js";
 import kycRouter from "./routes/kyc.routes.js";
+import postRouter from "./routes/post.routes.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
@@ -25,6 +26,7 @@ app.listen(3000, () => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/kyc", kycRouter);
+app.use("/api/post", postRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

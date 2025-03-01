@@ -1,12 +1,15 @@
 import jwt from "jsonwebtoken";
 
 export const verifyToken = (req, res, next) => {
-  const token = req.headers["authorization"]?.split(" ")[1];
-  if (!token) return res.status(401).json({ message: "No token provided" });
-
-  jwt.verify(token, "axiaexam", (err, user) => {
-    if (err) return res.status(403).json({ message: "Invalid token" });
-    req.user = user;
+  const token = req.header("x-auth-token");
+  if (!token) {
+    return res.status(401).json({ msg: "No token, authorization denied" });
+  }
+  try {
+    const decoded = jwt.verify(token, "axiaexam");
+    req.user = decoded.user;
     next();
-  });
+  } catch (err) {
+    res.status(401).json({ msg: "Token is not valid" });
+  }
 };

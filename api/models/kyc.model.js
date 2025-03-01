@@ -1,9 +1,14 @@
 import mongoose from "mongoose";
 
 const kycSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", unique: true },
-  idProof: { type: String, required: true },
-  addressProof: { type: String, required: true },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+    unique: true,
+  },
+  fullName: { type: String, required: true },
+  address: { type: String, required: true },
 });
 
 const KYC = mongoose.model("KYC", kycSchema);
